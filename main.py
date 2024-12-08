@@ -4,7 +4,7 @@ import sys
 
 
 from PyQt6 import uic  # Импортируем uic
-from PyQt6.QtWidgets import QApplication, QMainWindow, QWidget, QFileDialog
+from PyQt6.QtWidgets import QApplication, QWidget, QFileDialog, QListWidget
 from PyQt6.QtGui import QIcon
 from Crypto import Decoder, No_Flash_Drive, No_Key_On_Flash
 from Hello_window import Dialog
@@ -31,12 +31,18 @@ class Cryptographer_window(QWidget):
 
     def encoding_select(self):
         if self.fname == '':
-            self.status.setText('Выберите файл!')
+            self.status.setText('Выберите папку!')
             self.status.setStyleSheet("font: 15pt Comic Sans MS")
+            self.listWidget.clear()
+            self.listWidget.addItem('Ошибка')
         else:
             try:
+                self.listWidget.clear()
                 self.Encryptor = Decoder(self.fname, True, self.drive_letter)
+                self.listWidget.addItems(self.Encryptor.list)
             except No_Flash_Drive:
+                self.listWidget.clear()
+                self.listWidget.addItem('Ошибка')
                 self.status.setText('Вставьте флешку')
                 self.status.setStyleSheet("font: 15pt Comic Sans MS")
             else:
@@ -49,11 +55,18 @@ class Cryptographer_window(QWidget):
             self.status.setStyleSheet("font: 15pt Comic Sans MS")
         else:
             try:
+                self.listWidget.clear()
                 self.Encryptor = Decoder(self.fname, False, self.drive_letter)
+                self.listWidget.addItems(self.Encryptor.list)
+
             except No_Flash_Drive:
+                self.listWidget.clear()
+                self.listWidget.addItem('Ошибка')
                 self.status.setText('Вставьте флешку')
                 self.status.setStyleSheet("font: 15pt Comic Sans MS")
             except No_Key_On_Flash:
+                self.listWidget.clear()
+                self.listWidget.addItem('Ошибка')
                 self.status.setText('На флешке отсутствует ключ')
                 self.status.setStyleSheet("font: 15pt Comic Sans MS")
             else:

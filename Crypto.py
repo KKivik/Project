@@ -5,7 +5,6 @@ import sqlite3
 import os, ipaddress
 import socket
 
-
 class No_Flash_Drive(Exception):
 	pass
 
@@ -98,10 +97,12 @@ class Decoder:
 
 
 	def walk(self, temp_path): #Бегает по директории и шифрует файлs
+		self.list = []
 		names = os.listdir(temp_path)
 		#print(names)
 
 		for name in names:
+			self.list.append(name)
 			path = os.path.join(temp_path, name)
 			ext = os.path.splitext(path)
 
@@ -111,10 +112,12 @@ class Decoder:
 				self.walk(path)
 
 	def walk_to_decode(self, temp_path):
+		self.list = []
 		names = os.listdir(temp_path)
 		key = self.load_key()
 
 		for name in names:
+			self.list.append(name)
 			path = os.path.join(temp_path, name)
 			ext = os.path.splitext(path)
 
