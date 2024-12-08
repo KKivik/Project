@@ -8,11 +8,12 @@ from PyQt6.QtWidgets import QApplication, QWidget, QFileDialog, QListWidget
 from PyQt6.QtGui import QIcon
 from Crypto import Decoder, No_Flash_Drive, No_Key_On_Flash
 from Hello_window import Dialog
+from Main_window_UI import Ui_Form
 
-class Cryptographer_window(QWidget):
+class Cryptographer_window(QWidget, Ui_Form):
     def __init__(self, *args):
         super().__init__()
-        uic.loadUi('consts/Main_window.ui', self)  # Загружаем дизайн
+        self.setupUi(self)
         self.setWindowTitle("Cryptography")
         self.setWindowIcon(QIcon('images/ico.png'))
         self.dialog = Dialog()
